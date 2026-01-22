@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -6,160 +6,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
+* { margin:0; padding:0; box-sizing:border-box; font-family:Arial, Helvetica, sans-serif; }
+body { margin:0; overflow-x:hidden; color:#e5e7eb; }
 
-body {
+/* CANVAS FULLSCREEN */
+#spaceCanvas {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
   background: linear-gradient(135deg, #0f172a, #020617);
-  color: #e5e7eb;
 }
 
 /* TOP BAR */
 .topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 22px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display:flex; justify-content:space-between; align-items:center;
+  padding:14px 22px; border-bottom:1px solid rgba(255,255,255,0.08); position:relative; z-index:1;
 }
-
-.brand {
-  font-size: 1.3rem;
-  font-weight: bold;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.lang {
-  cursor: pointer;
-  font-size: 0.85rem;
-  color: #94a3b8;
-}
-
-/* BUTTONS */
-.btn {
-  padding: 8px 16px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 0.85rem;
-  color: white;
-  transition: 0.2s;
-}
-
-.btn.login {
-  background: #5865F2;
-}
-.btn.login:hover {
-  background: #4752c4;
-}
-
-.btn.server {
-  background: #22c55e;
-}
-.btn.server:hover {
-  background: #16a34a;
-}
+.brand{ font-size:1.3rem; font-weight:bold; }
+.actions{ display:flex; gap:10px; align-items:center; }
+.lang{ cursor:pointer; font-size:0.85rem; color:#94a3b8; }
+.btn{ padding:8px 16px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.85rem; color:white; transition:0.2s; }
+.btn.login{ background:#5865F2; } .btn.login:hover{ background:#4752c4; }
+.btn.server{ background:#22c55e; } .btn.server:hover{ background:#16a34a; }
 
 /* HERO */
-.hero {
-  padding: 32px 22px 18px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.hero h1 {
-  font-size: 2.1rem;
-}
-
-.hero p {
-  color: #94a3b8;
-  margin-top: 6px;
-  font-size: 0.95rem;
-}
+.hero{ padding:32px 22px 18px; max-width:1200px; margin:auto; position:relative; z-index:1; }
+.hero h1{ font-size:2.1rem; text-shadow:0 0 10px rgba(122,162,255,0.5);}
+.hero p{ color:#94a3b8; margin-top:6px; font-size:0.95rem; text-shadow:0 0 5px rgba(0,0,0,0.2); }
 
 /* GRID */
-.grid {
-  max-width: 1200px;
-  margin: 18px auto 0;
-  padding: 0 22px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 14px;
-}
+.grid{ max-width:1200px; margin:18px auto 0; padding:0 22px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; position:relative; z-index:1; }
 
 /* CARD */
-.card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 14px;
-  transition: 0.2s;
-}
-
-.card:hover {
-  border-color: rgba(122,162,255,0.6);
-  box-shadow: 0 0 0 1px rgba(122,162,255,0.3);
-  transform: translateY(-2px);
-}
-
-.card h3 {
-  margin-bottom: 8px;
-  color: #7aa2ff;
-  font-size: 1rem;
-}
-
-.card ul {
-  padding-left: 18px;
-}
-
-.card li {
-  margin-bottom: 6px;
-  font-size: 0.88rem;
-  color: #cbd5f5;
-}
+.card{ background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:14px; transition:0.2s; }
+.card:hover{ border-color: rgba(122,162,255,0.6); box-shadow:0 0 5px rgba(122,162,255,0.3); transform:translateY(-2px);}
+.card h3{ margin-bottom:8px; color:#7aa2ff; font-size:1rem;}
+.card ul{ padding-left:18px; }
+.card li{ margin-bottom:6px; font-size:0.88rem; color:#cbd5f5;}
 
 /* COMING */
-.coming {
-  text-align: center;
-  padding: 12px;
-  border-radius: 8px;
-  background: rgba(122,162,255,0.1);
-  font-weight: bold;
-  font-size: 0.9rem;
-  color: #a5b4fc;
-}
+.coming{ text-align:center; padding:12px; border-radius:8px; background:rgba(122,162,255,0.1); font-weight:bold; font-size:0.9rem; color:#a5b4fc; }
 
 /* FOOTER */
-footer {
-  text-align: center;
-  padding: 18px;
-  color: #64748b;
-  font-size: 0.8rem;
-}
+footer{ text-align:center; padding:18px; color:#64748b; font-size:0.8rem; position:relative; z-index:1; }
 </style>
 </head>
-
 <body>
+
+<!-- SPACE CANVAS -->
+<canvas id="spaceCanvas"></canvas>
 
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="brand">AstroPlays ©</div>
-
   <div class="actions">
     <div class="lang" onclick="toggleLang()" id="langBtn">EN</div>
     <a href="#" class="btn login" id="loginBtn">Login</a>
-    <a href="https://discord.gg/9FwvXmRF3H" target="_blank" class="btn server" id="serverBtn">
-      Discord
-    </a>
+    <a href="https://discord.gg/9FwvXmRF3H" target="_blank" class="btn server" id="serverBtn">Discord</a>
   </div>
 </div>
 
@@ -171,7 +77,6 @@ footer {
 
 <!-- GRID -->
 <div class="grid">
-
   <div class="card">
     <h3 id="coreTitle">Core Features</h3>
     <ul id="coreList">
@@ -180,7 +85,6 @@ footer {
       <li>Skalierbar & stabil</li>
     </ul>
   </div>
-
   <div class="card">
     <h3 id="activeTitle">Aktive Module</h3>
     <ul>
@@ -191,7 +95,6 @@ footer {
       <li>AstroShield</li>
     </ul>
   </div>
-
   <div class="card">
     <h3 id="devTitle">In Entwicklung</h3>
     <ul>
@@ -201,52 +104,67 @@ footer {
       <li>AstroLogs</li>
     </ul>
   </div>
-
   <div class="card">
     <h3>Dashboard</h3>
     <div class="coming" id="comingText">Coming Soon</div>
   </div>
-
 </div>
 
-<footer>
-  © AstroPlays – Play, Manage, Level Up.
-</footer>
+<footer>© AstroPlays – Play, Manage, Level Up.</footer>
 
 <script>
-let lang = "de";
-
-function toggleLang() {
-  lang = lang === "de" ? "en" : "de";
-  document.getElementById("langBtn").innerText = lang === "de" ? "EN" : "DE";
-
-  if (lang === "en") {
-    document.getElementById("headline").innerText = "Play. Manage. Level Up.";
-    document.getElementById("subline").innerText = "A modular Discord bot for modern communities.";
-    document.getElementById("coreTitle").innerText = "Core Features";
-    document.getElementById("coreList").innerHTML = `
-      <li>Modular system</li>
-      <li>Per-server configuration</li>
-      <li>Scalable & stable</li>
-    `;
-    document.getElementById("activeTitle").innerText = "Active Modules";
-    document.getElementById("devTitle").innerText = "In Development";
-    document.getElementById("comingText").innerText = "Coming Soon";
-  } else {
-    document.getElementById("headline").innerText = "Play. Manage. Level Up.";
-    document.getElementById("subline").innerText = "Ein modularer Discord Bot für moderne Communities.";
-    document.getElementById("coreTitle").innerText = "Core Features";
-    document.getElementById("coreList").innerHTML = `
-      <li>Modulares System</li>
-      <li>Server-spezifische Konfiguration</li>
-      <li>Skalierbar & stabil</li>
-    `;
-    document.getElementById("activeTitle").innerText = "Aktive Module";
-    document.getElementById("devTitle").innerText = "In Entwicklung";
-    document.getElementById("comingText").innerText = "Coming Soon";
+// LANGUAGE SWITCH
+let lang="de";
+function toggleLang(){
+  lang=lang==="de"?"en":"de";
+  document.getElementById("langBtn").innerText=lang==="de"?"EN":"DE";
+  if(lang==="en"){
+    document.getElementById("headline").innerText="Play. Manage. Level Up.";
+    document.getElementById("subline").innerText="A modular Discord bot for modern communities.";
+    document.getElementById("coreTitle").innerText="Core Features";
+    document.getElementById("coreList").innerHTML="<li>Modular system</li><li>Per-server configuration</li><li>Scalable & stable</li>";
+    document.getElementById("activeTitle").innerText="Active Modules";
+    document.getElementById("devTitle").innerText="In Development";
+    document.getElementById("comingText").innerText="Coming Soon";
+  }else{
+    document.getElementById("headline").innerText="Play. Manage. Level Up.";
+    document.getElementById("subline").innerText="Ein modularer Discord Bot für moderne Communities.";
+    document.getElementById("coreTitle").innerText="Core Features";
+    document.getElementById("coreList").innerHTML="<li>Modulares System</li><li>Server-spezifische Konfiguration</li><li>Skalierbar & stabil</li>";
+    document.getElementById("activeTitle").innerText="Aktive Module";
+    document.getElementById("devTitle").innerText="In Entwicklung";
+    document.getElementById("comingText").innerText="Coming Soon";
   }
 }
-</script>
 
+// CANVAS STARFIELD
+const canvas=document.getElementById("spaceCanvas");
+const ctx=canvas.getContext("2d");
+let w=canvas.width=window.innerWidth;
+let h=canvas.height=window.innerHeight;
+
+let stars=[];
+for(let i=0;i<200;i++){
+  stars.push({x:Math.random()*w, y:Math.random()*h, z:Math.random()*1.5+0.5, r:Math.random()*1.2+0.2});
+}
+
+function drawStars(){
+  ctx.clearRect(0,0,w,h);
+  for(let s of stars){
+    s.x -= s.z; if(s.x<0){ s.x=w; s.y=Math.random()*h; s.z=Math.random()*1.5+0.5;}
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle="rgba(255,255,255,0.8)";
+    ctx.fill();
+  }
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+window.addEventListener("resize",()=>{
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+});
+</script>
 </body>
 </html>
