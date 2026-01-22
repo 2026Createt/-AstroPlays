@@ -41,13 +41,17 @@ section h2 { font-size:2rem; font-weight:700; color:#7aa2ff; margin-bottom:24px;
 
 /* GRID CARDS */
 .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; }
-.card { background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:22px; transition:0.4s, box-shadow 0.5s, transform 0.5s; cursor:pointer; backdrop-filter:blur(6px); transform-style: preserve-3d; will-change: transform, box-shadow; }
+.card { background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:22px; transition:0.4s, box-shadow 0.5s, transform 0.5s; cursor:pointer; backdrop-filter:blur(6px); transform-style: preserve-3d; will-change: transform, box-shadow; display:flex; justify-content:center; align-items:center; }
 .card:hover { transform:translateY(-8px) rotateX(2deg) rotateY(2deg); box-shadow:0 12px 35px rgba(122,162,255,0.35); border-color: rgba(122,162,255,0.5); }
 .card h3 { margin-bottom:12px; color:#7aa2ff; font-size:1.2rem; }
 .card ul { padding-left:16px; }
 .card li { margin-bottom:6px; font-size:0.9rem; color:#cbd5f5; }
 .card.scroll-glow { box-shadow:0 12px 45px rgba(122,162,255,0.45); transform:translateY(-6px) rotateX(1deg) rotateY(1deg); }
 .coming { text-align:center; padding:12px; border-radius:8px; background:rgba(122,162,255,0.1); font-weight:600; font-size:0.9rem; color:#a5b4fc; }
+
+/* BUTTON IN CARD */
+.card .btn-card { padding:10px 22px; border-radius:8px; background:#22c55e; color:white; text-decoration:none; font-weight:600; transition:0.3s; }
+.card .btn-card:hover { background:#16a34a; }
 
 /* FOOTER */
 footer { text-align:center; padding:24px; color:#64748b; font-size:0.85rem; position:relative; z-index:2; }
@@ -74,7 +78,6 @@ footer { text-align:center; padding:24px; color:#64748b; font-size:0.85rem; posi
   <div class="right-buttons">
     <a href="#" class="btn login">Login</a>
     <a href="https://discord.gg/9FwvXmRF3H" target="_blank" class="btn server">Discord</a>
-    <a href="https://2026createt.github.io/Dashboard-AstroBot/" target="_blank" class="btn server">Dashboard</a>
   </div>
 </div>
 
@@ -94,9 +97,26 @@ footer { text-align:center; padding:24px; color:#64748b; font-size:0.85rem; posi
   </div>
 </section>
 
-<section id="dashboard"><h2>Dashboard</h2><div class="card"><div class="coming">Coming Soon</div></div></section>
+<!-- DASHBOARD SECTION -->
+<section id="dashboard">
+  <h2>Dashboard</h2>
+  <div class="card">
+    <a href="https://2026createt.github.io/Dashboard-AstroBot/" target="_blank" class="btn-card">Zum Dashboard</a>
+  </div>
+</section>
 
-<section id="links"><h2>Links</h2><div class="grid"><div class="card"><ul><li><a href="https://discord.gg/9FwvXmRF3H" target="_blank" style="color:#22c55e; text-decoration:none;">Join Discord</a></li><li><a href="https://2026createt.github.io/Dashboard-AstroBot/" target="_blank" style="color:#5865F2; text-decoration:none;">Dashboard</a></li></ul></div></div></section>
+<!-- LINKS SECTION -->
+<section id="links">
+  <h2>Links</h2>
+  <div class="grid">
+    <div class="card">
+      <ul>
+        <li><a href="https://discord.gg/9FwvXmRF3H" target="_blank" style="color:#22c55e; text-decoration:none;">Join Discord</a></li>
+        <li><a href="#" style="color:#5865F2; text-decoration:none;">Login (Demo)</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <footer>© ASTROPLAYS – Play, Manage, Level Up.</footer>
 
