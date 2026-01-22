@@ -4,76 +4,110 @@
 <meta charset="UTF-8">
 <title>ASTROPLAYS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:Arial, Helvetica, sans-serif; }
-body { color:#e5e7eb; overflow-x:hidden; scroll-behavior:smooth; }
+/* ===== BASIC RESET ===== */
+* { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
+body { color:#e5e7eb; overflow-x:hidden; scroll-behavior:smooth; background:#0b0c17; }
 
-/* CANVAS BACKGROUND */
+/* ===== CANVAS BACKGROUND ===== */
 #spaceCanvas, #nebulaCanvas {
   position: fixed; top:0; left:0; width:100%; height:100%; z-index:-2;
 }
-#spaceCanvas{ background: linear-gradient(135deg, #0f172a, #020617); }
-#nebulaCanvas{ z-index:-1; }
+#spaceCanvas { background: linear-gradient(160deg, #0b0c17, #05060b); }
+#nebulaCanvas { z-index:-1; }
 
-/* TOPBAR */
+/* ===== TOPBAR ===== */
 .topbar {
   display:flex; justify-content:space-between; align-items:center;
-  padding:12px 22px; position:fixed; width:100%; background:rgba(15,23,42,0.7); backdrop-filter:blur(6px); z-index:3;
+  padding:16px 40px; position:fixed; width:100%; top:0;
+  background:rgba(11,12,23,0.75); backdrop-filter:blur(8px); z-index:10;
 }
-.brand-nav { display:flex; align-items:center; gap:18px; }
-.brand{ font-size:2rem; font-weight:bold; letter-spacing:2px; cursor:pointer; }
-.nav-links a{ color:#e5e7eb; text-decoration:none; font-weight:500; margin-left:12px; transition:0.2s; }
-.nav-links a:hover, .nav-links a.active{ color:#7aa2ff; }
+.brand-nav { display:flex; align-items:center; gap:28px; }
+.brand { font-size:2rem; font-weight:900; letter-spacing:3px; color:#7aa2ff; cursor:pointer; }
+.nav-links a {
+  color:#e5e7eb; text-decoration:none; font-weight:600; margin-left:20px;
+  position:relative; transition:0.3s;
+}
+.nav-links a::after {
+  content:""; position:absolute; left:0; bottom:-4px; width:0; height:2px; background:#7aa2ff; transition:0.3s;
+}
+.nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+.nav-links a:hover, .nav-links a.active { color:#7aa2ff; }
 
 /* RIGHT BUTTONS */
-.right-buttons { display:flex; gap:10px; align-items:center; }
-.btn{ padding:6px 14px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.85rem; color:white; transition:0.2s; }
-.btn.login{ background:#5865F2; } .btn.login:hover{ background:#4752c4; }
-.btn.server{ background:#22c55e; } .btn.server:hover{ background:#16a34a; }
+.right-buttons { display:flex; gap:14px; align-items:center; }
+.btn {
+  padding:8px 18px; border-radius:8px; text-decoration:none; font-weight:600; font-size:0.9rem; color:white; transition:0.3s;
+}
+.btn.login { background:#5865F2; } .btn.login:hover { background:#4752c4; }
+.btn.server { background:#22c55e; } .btn.server:hover { background:#16a34a; }
 
-/* HERO */
-.hero{ padding:100px 22px 20px; max-width:1200px; margin:auto; position:relative; z-index:2; text-align:center; }
-.hero h1{ font-size:3rem; text-shadow:0 0 20px rgba(122,162,255,0.7);}
-.hero p{ color:#94a3b8; margin-top:8px; font-size:1rem; text-shadow:0 0 5px rgba(0,0,0,0.2); }
+/* ===== HERO ===== */
+.hero {
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  text-align:center; padding:160px 20px 80px; min-height:100vh; position:relative; z-index:2;
+}
+.hero h1 { font-size:4rem; font-weight:900; color:#7aa2ff; text-shadow:0 0 20px rgba(122,162,255,0.5); }
+.hero p { margin-top:14px; font-size:1.2rem; color:#94a3b8; max-width:700px; line-height:1.5; }
 
-/* SECTIONS */
-section{ max-width:1200px; margin:40px auto 0; padding:0 22px; position:relative; z-index:2; }
+/* ===== SECTIONS ===== */
+section { max-width:1200px; margin:80px auto; padding:0 40px; position:relative; z-index:2; }
 
-/* GRID CARDS */
-.grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
-.card{
-  background: rgba(255,255,255,0.03); 
-  border:1px solid rgba(255,255,255,0.06); 
-  border-radius:10px; 
-  padding:14px; 
-  transition:0.3s;
-  cursor:pointer;
+/* SECTION TITLES */
+section h2 {
+  font-size:2rem; font-weight:700; color:#7aa2ff; margin-bottom:24px; text-align:center;
+}
+
+/* ===== GRID CARDS ===== */
+.grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px;
+}
+.card {
+  background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px;
+  padding:22px; transition:0.4s, box-shadow 0.5s, transform 0.5s; cursor:pointer; backdrop-filter:blur(6px);
   transform-style: preserve-3d;
+  will-change: transform, box-shadow;
 }
-.card:hover{
-  border-color: rgba(122,162,255,0.6); 
-  box-shadow:0 0 15px rgba(122,162,255,0.4); 
-  transform:translateY(-4px) scale(1.03) rotateX(1deg) rotateY(1deg);
+.card:hover {
+  transform:translateY(-8px) rotateX(2deg) rotateY(2deg);
+  box-shadow:0 12px 35px rgba(122,162,255,0.35);
+  border-color: rgba(122,162,255,0.5);
 }
-.card h3{ margin-bottom:6px; color:#7aa2ff; font-size:1rem;}
-.card ul{ padding-left:16px; }
-.card li{ margin-bottom:4px; font-size:0.85rem; color:#cbd5f5;}
+.card h3 { margin-bottom:12px; color:#7aa2ff; font-size:1.2rem; }
+.card ul { padding-left:16px; }
+.card li { margin-bottom:6px; font-size:0.9rem; color:#cbd5f5; }
+
+/* GLOW ON SCROLL */
+.card.scroll-glow { box-shadow:0 12px 45px rgba(122,162,255,0.45); transform:translateY(-6px) rotateX(1deg) rotateY(1deg); }
 
 /* COMING */
-.coming{ text-align:center; padding:10px; border-radius:8px; background:rgba(122,162,255,0.1); font-weight:bold; font-size:0.85rem; color:#a5b4fc; }
+.coming {
+  text-align:center; padding:12px; border-radius:8px; background:rgba(122,162,255,0.1);
+  font-weight:600; font-size:0.9rem; color:#a5b4fc;
+}
 
-/* FOOTER */
-footer{ text-align:center; padding:16px; color:#64748b; font-size:0.8rem; position:relative; z-index:2; }
+/* ===== FOOTER ===== */
+footer {
+  text-align:center; padding:24px; color:#64748b; font-size:0.85rem; position:relative; z-index:2;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .hero h1 { font-size:3rem; }
+  .nav-links { display:none; }
+  .topbar { padding:12px 20px; }
+}
 </style>
 </head>
+
 <body>
 
 <canvas id="spaceCanvas"></canvas>
 <canvas id="nebulaCanvas"></canvas>
 
+<!-- TOPBAR -->
 <div class="topbar">
   <div class="brand-nav">
     <div class="brand">ASTROPLAYS</div>
@@ -89,7 +123,15 @@ footer{ text-align:center; padding:16px; color:#64748b; font-size:0.8rem; positi
   </div>
 </div>
 
+<!-- HERO -->
+<div class="hero">
+  <h1>ASTROPLAYS</h1>
+  <p>Play, Manage, Level Up – das ultimative Discord-Bot Dashboard für alle Server, modular und individuell anpassbar.</p>
+</div>
+
+<!-- INFOS SECTION -->
 <section id="infos">
+  <h2>Funktionen & Module</h2>
   <div class="grid">
     <div class="card">
       <h3>Core Features</h3>
@@ -121,62 +163,61 @@ footer{ text-align:center; padding:16px; color:#64748b; font-size:0.8rem; positi
   </div>
 </section>
 
+<!-- DASHBOARD SECTION -->
 <section id="dashboard">
-  <div class="card">
-    <div class="coming">Dashboard Coming Soon</div>
-  </div>
+  <h2>Dashboard</h2>
+  <div class="card"><div class="coming">Coming Soon</div></div>
 </section>
 
+<!-- LINKS SECTION -->
 <section id="links">
-  <div class="card">
-    <ul>
-      <li><a href="https://discord.gg/9FwvXmRF3H" target="_blank" style="color:#22c55e; text-decoration:none;">Join Discord</a></li>
-      <li><a href="#" style="color:#5865F2; text-decoration:none;">Login (Demo)</a></li>
-    </ul>
+  <h2>Links</h2>
+  <div class="grid">
+    <div class="card">
+      <ul>
+        <li><a href="https://discord.gg/9FwvXmRF3H" target="_blank" style="color:#22c55e; text-decoration:none;">Join Discord</a></li>
+        <li><a href="#" style="color:#5865F2; text-decoration:none;">Login (Demo)</a></li>
+      </ul>
+    </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>© ASTROPLAYS – Play, Manage, Level Up.</footer>
 
 <script>
-// ACTIVE LINK + SCROLL
+// NAV ACTIVE LINK
 $(".nav-links a").click(function(e){
   e.preventDefault();
   let target = $(this).attr("href");
-  $("html, body").animate({scrollTop: $(target).offset().top - 70}, 500);
+  $("html, body").animate({scrollTop: $(target).offset().top - 90}, 500);
 });
 $(window).scroll(function(){
   let scrollPos = $(document).scrollTop();
   $(".nav-links a").each(function(){
     let currLink = $(this);
     let refElem = $(currLink.attr("href"));
-    if(refElem.position().top - 80 <= scrollPos && refElem.position().top + refElem.height() > scrollPos){
+    if(refElem.position().top - 100 <= scrollPos && refElem.position().top + refElem.height() > scrollPos){
       $(".nav-links a").removeClass("active");
       currLink.addClass("active");
     }
   });
 });
 
-// STARFIELD PARALLAX
+// STARFIELD BACKGROUND
 const canvas=document.getElementById("spaceCanvas");
 const ctx=canvas.getContext("2d");
 let w=canvas.width=window.innerWidth;
 let h=canvas.height=window.innerHeight;
 let stars=[];
-for(let i=0;i<400;i++){ 
-  stars.push({
-    x:Math.random()*w, 
-    y:Math.random()*h, 
-    z:Math.random()*3+0.5, 
-    r:Math.random()*1.2+0.2,
-    dx:Math.random()*0.05, dy:Math.random()*0.05
-  }); 
+for(let i=0;i<500;i++){ 
+  stars.push({x:Math.random()*w, y:Math.random()*h, z:Math.random()*2+0.5, r:Math.random()*1.2+0.2});
 }
 function drawStars(){
   ctx.clearRect(0,0,w,h);
   for(let s of stars){
-    s.x += Math.sin(Date.now()*0.0001)*s.z*0.1;
-    s.y += Math.cos(Date.now()*0.0001)*s.z*0.1;
+    s.x -= 0.3*s.z;
+    if(s.x<0){ s.x=w; s.y=Math.random()*h; }
     ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
     ctx.fillStyle="rgba(255,255,255,0.8)"; ctx.fill();
   }
@@ -199,6 +240,22 @@ function drawNebula(){
 }
 drawNebula();
 
+// CARD SCROLL GLOW
+function scrollGlow(){
+  $('.card').each(function(){
+    let top = $(this).offset().top;
+    let bottom = top + $(this).outerHeight();
+    let scroll = $(window).scrollTop();
+    let windowHeight = $(window).height();
+    if(scroll + windowHeight > top + 50 && scroll < bottom){
+      $(this).addClass('scroll-glow');
+    } else { $(this).removeClass('scroll-glow'); }
+  });
+}
+$(window).on('scroll resize', scrollGlow);
+scrollGlow();
+
+// RESIZE
 $(window).resize(function(){ w=canvas.width=nebula.width=window.innerWidth; h=canvas.height=nebula.height=window.innerHeight; });
 </script>
 
