@@ -7,57 +7,107 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
-body { color:#e5e7eb; overflow-x:hidden; scroll-behavior:smooth; background:#0b0c17; cursor:crosshair; }
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Roboto,Arial,sans-serif}
+body{color:#e5e7eb;overflow-x:hidden;background:#0b0c17;scroll-behavior:smooth}
 
 /* CANVAS */
-#spaceCanvas, #nebulaCanvas {
-  position: fixed; top:0; left:0; width:100%; height:100%; z-index:-2;
+#spaceCanvas,#nebulaCanvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2
 }
-#spaceCanvas { background: linear-gradient(160deg, #0b0c17, #05060b); }
-#nebulaCanvas { z-index:-1; }
+#spaceCanvas{background:linear-gradient(160deg,#0b0c17,#05060b)}
+#nebulaCanvas{z-index:-1}
 
 /* TOPBAR */
-.topbar { display:flex; justify-content:space-between; align-items:center; padding:16px 40px; position:fixed; width:100%; top:0; background:rgba(11,12,23,0.75); backdrop-filter:blur(8px); z-index:10; }
-.brand-nav { display:flex; align-items:center; gap:28px; }
-.brand { font-size:2rem; font-weight:900; letter-spacing:3px; color:#7aa2ff; cursor:pointer; }
-.nav-links a { color:#e5e7eb; text-decoration:none; font-weight:600; margin-left:20px; position:relative; transition:0.3s; }
-.nav-links a::after { content:""; position:absolute; left:0; bottom:-4px; width:0; height:2px; background:#7aa2ff; transition:0.3s; }
-.nav-links a:hover::after, .nav-links a.active::after { width:100%; }
-.nav-links a:hover, .nav-links a.active { color:#7aa2ff; }
-.right-buttons { display:flex; gap:14px; align-items:center; }
-.btn { padding:8px 18px; border-radius:8px; text-decoration:none; font-weight:600; font-size:0.9rem; color:white; transition:0.3s; }
-.btn.login { background:#5865F2; } .btn.login:hover { background:#4752c4; }
-.btn.server { background:#22c55e; } .btn.server:hover { background:#16a34a; }
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 40px;position:fixed;width:100%;top:0;
+  background:rgba(11,12,23,.75);backdrop-filter:blur(8px);z-index:10
+}
+.brand{font-size:2rem;font-weight:900;letter-spacing:3px;color:#7aa2ff}
+.nav-links a{
+  color:#e5e7eb;text-decoration:none;font-weight:600;margin-left:20px;
+  position:relative
+}
+.nav-links a::after{
+  content:"";position:absolute;left:0;bottom:-4px;width:0;height:2px;
+  background:#7aa2ff;transition:.3s
+}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-links a:hover{color:#7aa2ff}
 
 /* HERO */
-.hero { display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:160px 20px 80px; min-height:100vh; position:relative; z-index:2; }
-.hero h1 { font-size:4rem; font-weight:900; color:#7aa2ff; text-shadow:0 0 25px rgba(122,162,255,0.6); }
-.hero p { margin-top:14px; font-size:1.2rem; color:#94a3b8; max-width:700px; line-height:1.5; }
+.hero{
+  min-height:100vh;padding:160px 20px 80px;
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;position:relative;z-index:2
+}
+.hero h1{
+  font-size:4rem;font-weight:900;color:#7aa2ff;
+  text-shadow:0 0 25px rgba(122,162,255,.6)
+}
+.hero p{
+  margin-top:14px;font-size:1.2rem;color:#94a3b8;
+  max-width:700px
+}
+.hero-buttons{
+  margin-top:32px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center
+}
+
+/* BUTTONS */
+.btn{
+  padding:10px 22px;border-radius:10px;
+  text-decoration:none;font-weight:700;font-size:.95rem;
+  color:#fff;transition:.3s
+}
+.btn.login{background:#5865F2}
+.btn.login:hover{background:#4752c4}
+.btn.server{background:#22c55e}
+.btn.server:hover{background:#16a34a}
 
 /* SECTIONS */
-section { max-width:1200px; margin:80px auto; padding:0 40px; position:relative; z-index:2; }
-section h2 { font-size:2rem; font-weight:700; color:#7aa2ff; margin-bottom:24px; text-align:center; }
+section{
+  max-width:900px;margin:80px auto;padding:0 24px;
+  position:relative;z-index:2
+}
+section h2{
+  font-size:2rem;font-weight:700;color:#7aa2ff;
+  margin-bottom:24px;text-align:center
+}
 
-/* GRID CARDS */
-.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; }
-.card { background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:22px; transition:0.4s, box-shadow 0.5s, transform 0.5s; cursor:pointer; backdrop-filter:blur(6px); transform-style: preserve-3d; will-change: transform, box-shadow; display:flex; justify-content:center; align-items:center; }
-.card:hover { transform:translateY(-8px) rotateX(2deg) rotateY(2deg); box-shadow:0 12px 35px rgba(122,162,255,0.35); border-color: rgba(122,162,255,0.5); }
-.card h3 { margin-bottom:12px; color:#7aa2ff; font-size:1.2rem; }
-.card ul { padding-left:16px; }
-.card li { margin-bottom:6px; font-size:0.9rem; color:#cbd5f5; }
-.card.scroll-glow { box-shadow:0 12px 45px rgba(122,162,255,0.45); transform:translateY(-6px) rotateX(1deg) rotateY(1deg); }
-.coming { text-align:center; padding:12px; border-radius:8px; background:rgba(122,162,255,0.1); font-weight:600; font-size:0.9rem; color:#a5b4fc; }
-
-/* BUTTON IN CARD */
-.card .btn-card { padding:10px 22px; border-radius:8px; background:#22c55e; color:white; text-decoration:none; font-weight:600; transition:0.3s; }
-.card .btn-card:hover { background:#16a34a; }
+/* ACCORDION */
+.accordion{display:flex;flex-direction:column;gap:16px}
+.accordion-item{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;overflow:hidden
+}
+.accordion-header{
+  padding:18px 22px;font-weight:700;
+  font-size:1.05rem;color:#7aa2ff;
+  cursor:pointer;background:rgba(255,255,255,.02)
+}
+.accordion-header:hover{
+  background:rgba(122,162,255,.08)
+}
+.accordion-content{
+  display:none;padding:18px 26px
+}
+.accordion-content ul{padding-left:18px}
+.accordion-content li{
+  margin-bottom:8px;color:#cbd5f5;font-size:.95rem
+}
 
 /* FOOTER */
-footer { text-align:center; padding:24px; color:#64748b; font-size:0.85rem; position:relative; z-index:2; }
+footer{
+  text-align:center;padding:24px;
+  color:#64748b;font-size:.85rem
+}
 
 /* RESPONSIVE */
-@media(max-width:768px){ .hero h1 { font-size:3rem; } .nav-links { display:none; } .topbar { padding:12px 20px; } }
+@media(max-width:768px){
+  .hero h1{font-size:3rem}
+  .nav-links{display:none}
+}
 </style>
 </head>
 <body>
@@ -67,54 +117,65 @@ footer { text-align:center; padding:24px; color:#64748b; font-size:0.85rem; posi
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <div class="brand-nav">
-    <div class="brand">ASTROPLAYS</div>
-    <div class="nav-links">
-      <a href="#infos">Infos</a>
-      <a href="#dashboard">Dashboard</a>
-      <a href="#links">Links</a>
-    </div>
-  </div>
-  <div class="right-buttons">
-    <a href="#" class="btn login">Login</a>
-    <a href="https://discord.gg/9FwvXmRF3H" target="_blank" class="btn server">Discord</a>
+  <div class="brand">ASTROPLAYS</div>
+  <div class="nav-links">
+    <a href="#infos">Infos</a>
   </div>
 </div>
 
 <!-- HERO -->
 <div class="hero">
   <h1>ASTROPLAYS</h1>
-  <p>Play, Manage, Level Up – das ultimative Discord-Bot Dashboard für alle Server, modular und individuell anpassbar.</p>
+  <p>Play, Manage, Level Up – das ultimative Discord-Bot-System.</p>
+
+  <div class="hero-buttons">
+    <a href="#" class="btn login">Login (Demo)</a>
+    <a href="https://discord.gg/9FwvXmRF3H" target="_blank" class="btn server">Discord</a>
+    <a href="https://2026createt.github.io/Dashboard-AstroBot/" target="_blank" class="btn server">Dashboard</a>
+  </div>
 </div>
 
-<!-- INFOS SECTION -->
+<!-- INFOS -->
 <section id="infos">
   <h2>Funktionen & Module</h2>
-  <div class="grid">
-    <div class="card"><h3>Core Features</h3><ul><li>Modulares System</li><li>Server-spezifische Konfiguration</li><li>Skalierbar & stabil</li></ul></div>
-    <div class="card"><h3>Aktive Module</h3><ul><li>AstroBoost</li><li>AstroGreeting</li><li>AstroModeration</li><li>AstroModlogs</li><li>AstroShield</li></ul></div>
-    <div class="card"><h3>In Entwicklung</h3><ul><li>AstroRoles</li><li>AstroTickets</li><li>AstroSupport</li><li>AstroLogs</li></ul></div>
-  </div>
-</section>
+  <div class="accordion">
 
-<!-- DASHBOARD SECTION -->
-<section id="dashboard">
-  <h2>Dashboard</h2>
-  <div class="card">
-    <a href="https://2026createt.github.io/Dashboard-AstroBot/" target="_blank" class="btn-card">Zum Dashboard</a>
-  </div>
-</section>
-
-<!-- LINKS SECTION -->
-<section id="links">
-  <h2>Links</h2>
-  <div class="grid">
-    <div class="card">
-      <ul>
-        <li><a href="https://discord.gg/9FwvXmRF3H" target="_blank" style="color:#22c55e; text-decoration:none;">Join Discord</a></li>
-        <li><a href="#" style="color:#5865F2; text-decoration:none;">Login (Demo)</a></li>
-      </ul>
+    <div class="accordion-item">
+      <div class="accordion-header">Aktive Module</div>
+      <div class="accordion-content">
+        <ul>
+          <li>AstroBoost</li>
+          <li>AstroGreeting</li>
+          <li>AstroModeration</li>
+          <li>AstroModlogs</li>
+          <li>AstroShield</li>
+        </ul>
+      </div>
     </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">Core Features</div>
+      <div class="accordion-content">
+        <ul>
+          <li>Modular & skalierbar</li>
+          <li>Server-individuelle Einstellungen</li>
+          <li>Dashboard-Steuerung</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-header">In Entwicklung</div>
+      <div class="accordion-content">
+        <ul>
+          <li>AstroRoles</li>
+          <li>AstroTickets</li>
+          <li>AstroSupport</li>
+          <li>AstroLogs</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -122,35 +183,33 @@ footer { text-align:center; padding:24px; color:#64748b; font-size:0.85rem; posi
 
 <script>
 // NAV SCROLL
-$(".nav-links a").click(function(e){e.preventDefault();$("html, body").animate({scrollTop: $($(this).attr("href")).offset().top-90},500);});
-$(window).scroll(function(){let scrollPos=$(document).scrollTop();$(".nav-links a").each(function(){let currLink=$(this);let refElem=$(currLink.attr("href"));if(refElem.position().top-100<=scrollPos&&refElem.position().top+refElem.height()>scrollPos){$(".nav-links a").removeClass("active");currLink.addClass("active");}});});
+$(".nav-links a").click(function(e){
+  e.preventDefault();
+  $("html,body").animate({
+    scrollTop:$($(this).attr("href")).offset().top-90
+  },500);
+});
+
+// ACCORDION
+$(".accordion-header").click(function(){
+  const c=$(this).next();
+  $(".accordion-content").not(c).slideUp(250);
+  c.slideToggle(250);
+});
 
 // STARFIELD
-const canvas=document.getElementById("spaceCanvas"), ctx=canvas.getContext("2d"); let w=canvas.width=window.innerWidth, h=canvas.height=window.innerHeight;
-let stars=[]; for(let i=0;i<500;i++){stars.push({x:Math.random()*w,y:Math.random()*h,z:Math.random()*2+0.5,r:Math.random()*1.2+0.2});}
-function drawStars(){ctx.clearRect(0,0,w,h);for(let s of stars){s.x -= 0.3*s.z; if(s.x<0){s.x=w;s.y=Math.random()*h;}ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle="rgba(255,255,255,0.8)";ctx.fill();} requestAnimationFrame(drawStars);}
-drawStars();
-
-// NEBULA + MOUSE PARALLAX
-const nebula=document.getElementById("nebulaCanvas"); const nctx=nebula.getContext("2d"); let mouseX=0,mouseY=0;
-document.addEventListener('mousemove', e => { mouseX=e.clientX; mouseY=e.clientY; });
-function drawNebula(){
-  nctx.clearRect(0,0,w,h);
-  let gradient=nctx.createRadialGradient(w*0.3 + (mouseX-w/2)*0.03, h*0.3 + (mouseY-h/2)*0.03,0,w*0.3,h*0.3,w*0.6);
-  gradient.addColorStop(0,'rgba(122,162,255,0.08)');
-  gradient.addColorStop(0.5,'rgba(122,162,255,0.02)');
-  gradient.addColorStop(1,'rgba(0,0,0,0)');
-  nctx.fillStyle=gradient; nctx.fillRect(0,0,w,h);
-  requestAnimationFrame(drawNebula);
-}
-drawNebula();
-
-// CARD SCROLL GLOW
-function scrollGlow(){ $('.card').each(function(){let top=$(this).offset().top; let bottom=top+$(this).outerHeight(); let scroll=$(window).scrollTop(); let windowHeight=$(window).height(); if(scroll+windowHeight>top+50 && scroll<bottom){$(this).addClass('scroll-glow');} else{$(this).removeClass('scroll-glow');}});}
-$(window).on('scroll resize', scrollGlow); scrollGlow();
-
-// RESIZE
-$(window).resize(function(){ w=canvas.width=nebula.width=window.innerWidth; h=canvas.height=nebula.height=window.innerHeight; });
+const c=document.getElementById("spaceCanvas"),x=c.getContext("2d");
+let w=c.width=innerWidth,h=c.height=innerHeight;
+let s=[...Array(500)].map(()=>({x:Math.random()*w,y:Math.random()*h,z:Math.random()*2+0.5}));
+(function d(){
+  x.clearRect(0,0,w,h);
+  s.forEach(a=>{
+    a.x-=0.3*a.z;if(a.x<0){a.x=w;a.y=Math.random()*h}
+    x.fillStyle="white";x.fillRect(a.x,a.y,1.2,1.2)
+  });
+  requestAnimationFrame(d)
+})();
+onresize=()=>{w=c.width=innerWidth;h=c.height=innerHeight};
 </script>
 
 </body>
